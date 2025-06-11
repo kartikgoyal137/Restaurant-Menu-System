@@ -1,0 +1,42 @@
+:root {
+    --sky-blue: #8ecae6ff;
+    --blue-green: #219ebcff;
+    --prussian-blue: #023047ff;
+    --yellow: #ffb703ff;
+    --ut-orange: #fb8500ff;
+}
+
+* {
+    background-color: var(--prussian-blue);
+}
+
+.navbar-brand, .nav-item a {
+    color: var(--yellow);
+}
+.navbar-brand:hover {
+    color: var(--yellow);
+}
+.nav-item a:hover {
+    color: var(--yellow);
+}
+
+#helloM {
+    font-size: 1.6em;
+    font-weight: 650;
+    color: var(--yellow);
+    margin: 0px 1em;
+}
+
+.data , .dataHead{
+    color: white;
+}
+
+.dataHead {
+    font-weight: 700;
+    font-size: 1.5em;
+    color: var(--ut-orange);
+}
+
+.data {
+    font-weight: 600;
+}
