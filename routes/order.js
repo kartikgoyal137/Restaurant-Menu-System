@@ -5,6 +5,7 @@ const pool = require('../db.js');
 const jwt = require('jsonwebtoken');
 const {auth} = require('./login.js');
 router.use(urlencoded({ extended: true })); 
+const {body, validationResult} = require('express-validator');
 router.use(express.json());
 const SECRET_KEY = 'sds';
 
@@ -33,7 +34,7 @@ router.get('/', auth, async (req,res) => {
     // const sql3 = 'UPDATE payments SET food_total = ? WHERE order_id = ?';
     // const [query3] = await pool.promise().query(sql3, [price, req.cookies.order_id]);
 
-    res.render('order.ejs', {
+    res.status(200).render('order.ejs', {
         userData : userData[0],
         orderID : req.cookies.order_id,
         itemData : itemData,
@@ -41,7 +42,23 @@ router.get('/', auth, async (req,res) => {
     });
 })
 
-router.patch('/update', auth, async (req,res) => {
+router.patch('/update', [
+                        body('start').notEmpty().isInt({min: -1, max: +1}),
+                        body('num').notEmpty().isInt({min: -1, max: +1}),
+                        body('product_id').notEmpty().isInt({min: 51000, max: 54000}),
+    auth], async (req,res) => {
+
+    const Allerr = validationResult(req).array();
+    const startErr = Allerr.find(ele => ele.path === 'start');
+    const numErr = Allerr.find(ele => ele.path === 'num');
+    const productErr = Allerr.find(ele => ele.path === 'product_id');
+    
+    if(startErr)
+    {
+        return res.status(400).json({ startError : startErr})
+    }
+
+    
     const info = req.body;
     const token = req.cookies.token;
     const user = jwt.verify(token, SECRET_KEY);
@@ -54,11 +71,21 @@ router.patch('/update', auth, async (req,res) => {
         const sql_3 = 'SELECT * FROM orders where user_id = ?';
         const [query_3] = await pool.promise().query(sql_3, [user.user_id]);
         res.cookie('order_id', query_3.at(-1).order_id);
-        res.end();
+        res.status(201).end();
     }
 
     if(info.start === 1)
     {
+
+    if(productErr)
+    {
+        return res.status(400).json({ productError : productErr || 0})
+    }
+    if(numErr)
+    {
+        return res.status(400).json({ numError : numErr || 0})
+    }
+
         const sql_2 = `
                  INSERT INTO serve (order_id, product_id, quantity)
                  VALUES (?, ?, ?)
@@ -66,11 +93,20 @@ router.patch('/update', auth, async (req,res) => {
                 `;
 
         const [rows] = await pool.promise().query(sql_2, [req.cookies.order_id, info.product_id, info.num]);
-        res.end();
+        res.status(200).end();
     }
 })
 
-router.post('/place', auth, async (req,res) => {
+router.post('/place', [
+                        body('table').notEmpty().isInt(),
+                        body('tip').notEmpty().isInt(),
+    auth], async (req,res) => {
+
+    const err = validationResult(req);
+    if (!err.isEmpty() || !req.cookies.order_id)
+    {
+        return res.status(400).json({errors : err.array()})
+    }
     let price = 0;
 
     const sql4 = 'SELECT * FROM serve where order_id = ?';
@@ -92,7 +128,14 @@ router.post('/place', auth, async (req,res) => {
     const sql2 = 'INSERT INTO payments (order_id, user_id, created_at, food_total, tip) VALUES (?, ?, NOW(), ?, ?);';
     const query2 = await pool.promise().query(sql2, [req.cookies.order_id, user.user_id, price, req.body.tip]);
 
-    res.redirect('/home');
+    //cleanup
+    const sql3 = 'DELETE FROM payments p WHERE NOT EXISTS (SELECT 1 FROM serve s WHERE s.order_id = p.order_id);';
+    const query3 = await pool.promise().query(sql3);
+    const sql5 = 'DELETE FROM orders o WHERE NOT EXISTS (SELECT 1 FROM serve s WHERE s.order_id = o.order_id);';
+    const query5 = await pool.promise().query(sql5);
+
+
+    res.status(201).redirect('/home');
     res.end();
 })
 

@@ -4,6 +4,7 @@ const express = require('express');
 const pool = require('../db.js');
 const jwt = require('jsonwebtoken');
 const {auth} = require('./login.js');
+const {body, validationResult} = require('express-validator');
 router.use(urlencoded({ extended: true })); 
 const SECRET_KEY = 'sds';
 router.use(express.json());
@@ -14,7 +15,7 @@ async function adminAuth (req,res,next) {
     const [query] = await pool.promise().query(sql, [user.user_id]);
     if(query[0].role !== 'administrator')
     {
-        return res.send('invalid credentials');
+        return res.status(403).send('invalid credentials');
     }
     next();
 }
@@ -64,13 +65,23 @@ router.get('/', [auth, adminAuth], async (req,res) => {
 
         index++;
     }
+
     res.status(200).render('admin', {
         data : fullData
         });
 })
 
 
-router.patch('/status', [auth,adminAuth], async (req,res) => {
+router.patch('/status', [
+                        body('num').notEmpty().isInt({min:0, max:2}),
+                        body('paymentID').notEmpty().isInt(),
+    auth,adminAuth], async (req,res) => {
+
+    const err = validationResult(req)
+    if (!err.isEmpty())
+    {
+        return res.status(400).json({errors : err})
+    }
     const sql = 'UPDATE payments SET status = ? WHERE transaction_id = ? ;';
     let newS = "";
     if(Number(req.body.num)===0)
@@ -83,7 +94,7 @@ router.patch('/status', [auth,adminAuth], async (req,res) => {
     }
     const query = await pool.promise().query(sql, [newS, Number(req.body.paymentID)]);
 
-    res.end();
+    res.status(200).end();
 })
 
 

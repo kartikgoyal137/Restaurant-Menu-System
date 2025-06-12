@@ -4,6 +4,7 @@ const express = require('express');
 const pool = require('../db.js');
 const jwt = require('jsonwebtoken');
 const {auth} = require('./login.js');
+const {body, validationResult} = require('express-validator');
 router.use(urlencoded({ extended: true })); 
 const SECRET_KEY = 'sds';
 router.use(express.json());
@@ -15,7 +16,7 @@ async function chefAuth (req,res,next) {
     const [query] = await pool.promise().query(sql, [user.user_id]);
     if(query[0].role === 'customer')
     {
-        return res.send('invalid credentials');
+        return res.status(403).send('invalid credentials');
     }
     next();
 }
@@ -59,7 +60,16 @@ router.get('/', [auth, chefAuth], async (req,res) => {
         });
 })
 
-router.patch('/status', [auth,chefAuth], async (req,res) => {
+router.patch('/status', [
+                        body('num').notEmpty().isInt({min:0, max:2}),
+                        body('orderID').notEmpty().isInt(),
+    auth,chefAuth], async (req,res) => {
+
+    const err = validationResult(req)
+    if (!err.isEmpty())
+    {
+        return res.status(400).json({errors : err})
+    }
     const sql = 'UPDATE orders SET status = ? WHERE ORDER_ID = ? ;';
     let newS = "";
     if(Number(req.body.num)===0)
@@ -76,7 +86,7 @@ router.patch('/status', [auth,chefAuth], async (req,res) => {
     }
     const query = await pool.promise().query(sql, [newS, req.body.orderID]);
 
-    res.end();
+    res.status(200).end();
 })
 
 

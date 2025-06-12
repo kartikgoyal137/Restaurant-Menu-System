@@ -5,6 +5,7 @@ const pool = require('../db.js');
 const jwt = require('jsonwebtoken');
 const {auth} = require('./login.js');
 router.use(urlencoded({ extended: true })); 
+router.use(express.json())
 
 async function fetchFoodData () {
     const sql = 'select * from categories;';
