@@ -89,10 +89,12 @@ router.patch('/update', [
         const sql_2 = `
                  INSERT INTO serve (order_id, product_id, quantity)
                  VALUES (?, ?, ?)
-                 ON DUPLICATE KEY UPDATE quantity = quantity + VALUES(quantity);
+                 ON DUPLICATE KEY UPDATE quantity = IF(quantity + VALUES(quantity) >= 0, quantity + VALUES(quantity), quantity);
                 `;
-
         const [rows] = await pool.promise().query(sql_2, [req.cookies.order_id, info.product_id, info.num]);
+
+        const sql_3 = `DELETE FROM serve WHERE quantity <= 0`;
+        const query_3 = await pool.promise().query(sql_3);
         res.status(200).end();
     }
 })
