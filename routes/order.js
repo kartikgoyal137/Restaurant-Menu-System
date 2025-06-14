@@ -110,7 +110,7 @@ router.post(
   "/place",
   [body("table").notEmpty().isInt(), body("tip").notEmpty().isInt(), auth],
   async (req, res) => {
-    const err = validationResult(req);
+    const errors = validationResult(req);
     let errM = "";
     if (!errors.isEmpty()) {
       errors.errors.forEach((ele) => {

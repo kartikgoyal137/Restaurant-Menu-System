@@ -21,7 +21,8 @@ router.get("/", auth, async (req, res) => {
   const user = jwt.verify(req.cookies.token, SECRET_KEY);
   const sql = `select * from users where email = ?`;
   const sql2 = `select * from orders`;
-  const userData = (await pool.promise().query(sql, [user.email])) || [[0]];
+  let userData = [[{ first_name: "User" }]];
+  userData = await pool.promise().query(sql, [user.email]);
   const orderq = await pool.promise().query(sql, [user.email]);
   res.status(200).render("home", {
     categories: data,

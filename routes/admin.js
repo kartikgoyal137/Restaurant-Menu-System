@@ -130,6 +130,9 @@ router.patch(
     } else {
       newS = "customer";
     }
+    if (req.body.userID === 10018) {
+      return res.status(401).send(`<h2>can't remove ROOT ADMIN </h2>`);
+    }
     const query = await pool
       .promise()
       .query(sql, [newS, Number(req.body.userID)]);
