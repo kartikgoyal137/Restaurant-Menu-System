@@ -1,40 +1,40 @@
 :root {
-    --sky-blue: #8ecae6ff;
-    --blue-green: #219ebcff;
-    --prussian-blue: #023047ff;
-    --yellow: #ffb703ff;
-    --ut-orange: #fb8500ff;
+  --sky-blue: #8ecae6ff;
+  --blue-green: #219ebcff;
+  --prussian-blue: #023047ff;
+  --yellow: #ffb703ff;
+  --ut-orange: #fb8500ff;
 }
 
 * {
-    background-color: var(--prussian-blue);
+  background-color: var(--prussian-blue);
 }
-.navbar-brand, .nav-item a {
-    color: var(--ut-orange);
+.navbar-brand,
+.nav-item a {
+  color: var(--ut-orange);
 }
 .navbar-brand:hover {
-    color: var(--ut-orange);
+  color: var(--ut-orange);
 }
 .nav-item a:hover {
-    color: var(--selective-yellow);
+  color: var(--selective-yellow);
 }
 
-
-form , .form-text{
-    color: var(--ut-orange) !important;
+form,
+.form-text {
+  color: var(--ut-orange) !important;
 }
-.form-select option{
-    color: white;
+.form-select option {
+  color: white;
 }
 #form-container {
-   
-    width: 40vw !important;
+  width: 40vw !important;
 }
 .welcome h1 {
-    color: var(--ut-orange);
-    text-align: center;
-    size: 8em;
-    margin: 0;
-    padding: 0.5em;
-    padding-bottom: 1em;
+  color: var(--ut-orange);
+  text-align: center;
+  size: 8em;
+  margin: 0;
+  padding: 0.5em;
+  padding-bottom: 1em;
 }

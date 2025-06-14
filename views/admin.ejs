@@ -16,10 +16,11 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-      <ul class="navbar-nav ms-auto me-3 mb-2 mb-lg-0">
+      <ul class="navbar-nav text-light ms-auto me-3 mb-2 mb-lg-0">*click on
                 <li class="nav-item mx-2 btn btn-outline-light">
-          *click on status value to update
+           status/role
         </li>
+        value to update
         <li class="nav-item mx-2">
           <a class="nav-link" href="http://localhost:4000/home">Home</a>
         </li>
@@ -56,6 +57,25 @@
     <div class="col-1 mx-2 btn btn-outline-info"><%= item.paymentID %></div>
     <div class="col-1 mx-2 btn btn-outline-warning" onclick="changeStatus(<%= item.paymentID %>, '<%= item.status %>')"><%= item.status %></div>
     <div class="col-1 mx-2 btn btn-outline-success"><%= item.bill %></div>
+  </div>
+<%}); %>
+
+<hr>
+  <div class="row pb-5 text-center dataHead">
+    <div class="col-1 mx-4">userID</div>
+    <div class="col-2 mx-4">Name</div>
+    <div class="col-1 mx-4">Role</div>
+    <div class="col-3 mx-4">emailID</div>
+    <div class="col-2 mx-4">Contact (+91)</div>
+  </div>
+<div class="container-fluid data text-center">
+<% users.forEach(item => { %>
+  <div class="row py-2">
+    <div class="col-1 mx-4 btn btn-outline-warning"><%= item.user_id %></div>
+    <div class="col-2 mx-4 btn btn-outline-success"><%= item.first_name%> <%= item.last_name %></div>
+    <div class="col-1 mx-4 btn btn-outline-info" onclick="changeRole(<%= item.user_id %>, '<%= item.role %>')"><%= item.role %></div>
+    <div class="col-3 mx-4 btn btn-outline-warning"><%= item.email %></div>
+    <div class="col-2 mx-4 btn btn-outline-success"><%= item.contact %></div>
   </div>
 <%}); %>
 

@@ -1,134 +1,136 @@
 :root {
-    --sky-blue: #8ecae6ff;
-    --blue-green: #219ebcff;
-    --prussian-blue: #023047ff;
-    --yellow: #ffb703ff;
-    --ut-orange: #fb8500ff;
+  --sky-blue: #8ecae6ff;
+  --blue-green: #219ebcff;
+  --prussian-blue: #023047ff;
+  --yellow: #ffb703ff;
+  --ut-orange: #fb8500ff;
 }
 
 * {
-    background-color: var(--prussian-blue);
+  background-color: var(--prussian-blue);
 }
 
-.navbar-brand, .nav-item a {
-    color: var(--yellow);
+.navbar-brand,
+.nav-item a {
+  color: var(--yellow);
 }
 .navbar-brand:hover {
-    color: var(--yellow);
+  color: var(--yellow);
 }
 .nav-item a:hover {
-    color: var(--yellow);
+  color: var(--yellow);
 }
 
 .sec1 h1 {
-    font-size: 4em;
-    color: var(--ut-orange);
+  font-size: 4em;
+  color: var(--ut-orange);
 }
 .sec1 p {
-    font-size: 1.4em;
-    color: var(--ut-orange);
-    text-align: center;
+  font-size: 1.4em;
+  color: var(--ut-orange);
+  text-align: center;
 }
 
 .carousel-container img {
-    width: 14%;
-    margin-top: 20px;
-    border-radius: 20%;
-    margin-left: 2vw;
-    margin-right: 2vw;
-    border: 5px solid var(--yellow);
-    transition: 0.25s;
-    margin-top: 3em;
+  width: 14%;
+  margin-top: 20px;
+  border-radius: 20%;
+  margin-left: 2vw;
+  margin-right: 2vw;
+  border: 5px solid var(--yellow);
+  transition: 0.25s;
+  margin-top: 3em;
 }
 .carousel-container img:hover {
-    transform: scale(1.1) translateY(-1.5em);
+  transform: scale(1.1) translateY(-1.5em);
 }
 
 menu {
-    background-color: var(--prussian-blue);
+  background-color: var(--prussian-blue);
 }
 
 #name {
-    color: white;
+  color: white;
 }
 #foodDes {
-    text-align: center;
-    display: inline-block;
-    width: 60vw;
-    margin: auto;
+  text-align: center;
+  display: inline-block;
+  width: 60vw;
+  margin: auto;
 }
 #foodImg {
-    margin: 0em 2em;
-    width: 30%;
-    height: 30%;
-    justify-self: center;
-    align-content: center;
+  margin: 0em 2em;
+  width: 30%;
+  height: 30%;
+  justify-self: center;
+  align-content: center;
 }
 
-.card-title, .card-text {
-    color: var(--blue-green);
-    background-color: whitesmoke;
+.card-title,
+.card-text {
+  color: var(--blue-green);
+  background-color: whitesmoke;
 }
 
 .card-body {
-    background-color: whitesmoke;
-    border-radius: 15%;
+  background-color: whitesmoke;
+  border-radius: 15%;
 }
 
 .card-img-top {
-    align-self: center;
-    justify-self: center;
-    border-radius: 15%;
+  align-self: center;
+  justify-self: center;
+  border-radius: 15%;
 }
 
 .card {
-    border-radius: 15%;
-    background-color: whitesmoke;
-    transition: 0.25s;
-    box-sizing: border-box;
+  border-radius: 15%;
+  background-color: whitesmoke;
+  transition: 0.25s;
+  box-sizing: border-box;
 }
 
 .card:hover {
-    transform: translateY(-2em);
+  transform: translateY(-2em);
 }
 
 .catName {
-    overflow : auto;
+  overflow: auto;
 }
 
 #helloM {
-    font-size: 1.6em;
-    font-weight: 650;
-    color: var(--yellow);
-    margin: 0px 1em;
+  font-size: 1.6em;
+  font-weight: 650;
+  color: var(--yellow);
+  margin: 0px 1em;
 }
 
 .addToCart {
-    background-color: whitesmoke;
-    margin-left: 1em;
+  background-color: whitesmoke;
+  margin-left: 1em;
 }
 .addToCart button {
-    margin: 0;
-    width: 2em;
-    height: 2em;
-    justify-content: center;
-    align-items: center;
+  margin: 0;
+  width: 2em;
+  height: 2em;
+  justify-content: center;
+  align-items: center;
 }
 #counterValue {
-    background-color: whitesmoke;
-    color: black;
+  background-color: whitesmoke;
+  color: black;
 }
 
 .startOrder {
-    justify-content: center !important;
-    padding-top: 3em;
+  justify-content: center !important;
+  padding-top: 3em;
 }
 
 .checkCart {
-    visibility: collapse;
+  visibility: collapse;
 }
 
 .disable {
-    pointer-events: none;
-    opacity: 0.4;
+  pointer-events: none;
+  opacity: 0.4;
 }

@@ -1,5 +1,5 @@
-const mysql = require('mysql2');
-require('dotenv').config();
+const mysql = require("mysql2");
+require("dotenv").config();
 
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
@@ -10,10 +10,10 @@ const pool = mysql.createPool({
 
 pool.getConnection((err, connection) => {
   if (err) {
-    console.log('Database connection failed :', err.message);
+    console.log("Database connection failed :", err.message);
     process.exit(1);
   } else {
-    console.log('Database connected');
+    console.log("Database connected");
     connection.release();
   }
 });
