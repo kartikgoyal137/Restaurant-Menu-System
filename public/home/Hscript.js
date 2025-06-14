@@ -7,7 +7,7 @@ async function getCatData (index)
     let allFood = "";
     for (const item of data.items) {
     const ing = item.ingredientList || 'will be added soon';
-    allFood += `<div class="card mx-3 my-5 overflowy-auto" style="width: 15rem; height: 27rem;"><img src="${item.image_url}" class="card-img-top"  style="width: 15rem; height: 15rem;" alt="..."><div class="card-body"><h5 class="card-title">${item.product_name}</h5><p class="card-text">${ing}</p><a href="#" class="btn btn-success price">Price : $999 </a>
+    allFood += `<div class="card mx-3 my-5 overflowy-auto" style="width: 15rem; height: 27rem;"><img src="${item.image_url}" class="card-img-top"  style="width: 15rem; height: 15rem;" alt="..."><div class="card-body"><h5 class="card-title">${item.product_name}</h5><p class="card-text">${ing}</p><a href="#" class="btn btn-success price">Price : $49 </a>
     <div class="addToCart d-inline">
       <button class="btn btn-danger" onclick="editOrder(${item.product_id}, -1)">-</button>
       <button class="btn btn-success" onclick="editOrder(${item.product_id}, 1)">+</button>

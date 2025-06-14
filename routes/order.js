@@ -105,9 +105,13 @@ router.post('/place', [
     auth], async (req,res) => {
 
     const err = validationResult(req);
-    if (!err.isEmpty() || !req.cookies.order_id)
-    {
-        return res.status(400).json({errors : err.array()})
+    let errM = "";
+    if(!errors.isEmpty())
+    {    
+        errors.errors.forEach(ele => {
+        errM += `<h4> [${ele.value}] is invalid value for the field [${ele.path}] </h4>`;
+        });
+        return res.status(400).send(`${errM}`);
     }
     let price = 0;
 

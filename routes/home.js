@@ -39,7 +39,7 @@ router.get('/foods', auth , async (req,res) => {
         image : item.image_url
     }
 
-    const sql1 = `SELECT * from MENU WHERE category_id = ?;`;
+    const sql1 = `SELECT * from menu WHERE category_id = ?;`;
     const [rows] = await pool.promise().query(sql1, [id])
     
     food.items = rows;

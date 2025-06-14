@@ -16,10 +16,6 @@ router.use(express.static('public'));
 router.use(cookieParser());
 router.use(express.json())
 
-router.get('/', async (req,res) => {
-    res.render('login');
-}) 
-
 async function authenticate1 (req,res,next)
 {
   const { email , password } = req.body;
@@ -46,28 +42,36 @@ function authenticate2 (req,res,next)
   }
   catch (err) {
     res.clearCookie('token');
-    return res.status(401).redirect('/');
+    return res.status(401).redirect('/login');
   }
 }
+
+router.get('/' , (req,res) => {
+  res.render('login.ejs');
+})
 
 router.post('/signup', [
                         body('firstName').notEmpty().isAlpha(),
                         body('lastName').notEmpty().isAlpha(),
                         body('phone').notEmpty().isNumeric(),
                         body('email').notEmpty().isEmail(),
-                        body('password').notEmpty(),
-                        body('role').notEmpty()
+                        body('password').notEmpty().isLength({min:8}),
 ], async (req, res) => {
 
   const errors = validationResult(req);
+  let errM = ""
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+    
+    errors.errors.forEach(ele => {
+      errM += `<h4> [${ele.value}] is invalid value for the field [${ele.path}] </h4>`;
+    });
+    return res.status(400).send(`${errM}`);
   }
 
   const ud = req.body;
-  const sql = 'INSERT INTO users (first_name, last_name, contact, email, password_hash, role) VALUES (?, ?, ?, ?, ?, ?)';
+  const sql = 'INSERT INTO users (first_name, last_name, contact, email, password_hash) VALUES (?, ?, ?, ?, ?)';
 
-  await pool.promise().query(sql, [ud.firstName, ud.lastName, ud.phone, ud.email, hashPassword(ud.password), ud.role]);
+  await pool.promise().query(sql, [ud.firstName, ud.lastName, ud.phone, ud.email, hashPassword(ud.password)]);
   res.status(200).render('login');
 });
 
@@ -76,9 +80,13 @@ router.post('/auth', [body('email').notEmpty().isEmail(),
   authenticate1], (req,res) => {
 
   const errors = validationResult(req)
+  let errM = "";
   if(!errors.isEmpty())
-  {
-    return res.status(400).json({ errors: errors.array() });
+  {    
+    errors.errors.forEach(ele => {
+      errM += `<h4> [${ele.value}] is invalid value for the field [${ele.path}] </h4>`;
+    });
+    return res.status(400).send(`${errM}`);
   }
   res.status(200).redirect('/home');
 })

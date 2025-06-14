@@ -49,49 +49,14 @@
 
  <div class="container-fluid signup-form">
     <div class="container " id="form-container">
-    <form action="/login/signup" method="post">
-
-   <div class="mb-3">
-    <label for="firstname" class="form-label">First Name</label>
-    <input required type="text" name="firstName" class="form-control" id="firstname" aria-describedby="emailHelp">
-  </div>
-  <div class="mb-3">
-    <label for="lastname" class="form-label">Last Name</label>
-    <input required type="text" name="lastName" class="form-control" id="lastname" aria-describedby="emailHelp">
-  </div>
-
-  <div class="mb-3">
-    <label for="contact" class="form-label">Contact Info</label>
-    <input required type="number" name="phone" class="form-control" id="contact" placeholder="Phone number (+91)" aria-describedby="emailHelp">
-  </div>
-
-
-  <div class="mb-3">
-    <input required type="email" name="email" class="form-control" placeholder="Email address" aria-describedby="emailHelp">
-  </div>
-
+   <form action="/login/auth" method="post">
+    <label for="address" class="form-label">Email ID</label>
+    <input required type="email" name="email" class="form-control" id="address" aria-describedby="emailHelp">
   <div class="mb-3">
     <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input required type="password" name="password" class="form-control" id="exampleInputPassword1">
+    <input required name="password" type="password" class="form-control" id="exampleInputPassword1">
   </div>
-
-<div class="input-group mb-3">
-  <label class="input-group-text" for="inputGroupSelect01">Role</label>
-  <select class="form-select" name="role" id="inputGroupSelect01">
-    <option value="1" selected>Customer</option>
-    <option value="2">Chef</option>
-    <option value="3">Admin</option>
-  </select>
-</div>
-
-  <div class="mb-3 form-check">
-    <input required type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Accept Terms & Conditions</label>
-  </div>
-
-
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+  <button type="submit" class="btn btn-primary">Submit</button></form>
 </div>
 </div>
 

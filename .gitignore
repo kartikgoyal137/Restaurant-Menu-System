@@ -1,2 +1,3 @@
-./node_modules
-./df.js
+/node_modules
+df.js
+.env
