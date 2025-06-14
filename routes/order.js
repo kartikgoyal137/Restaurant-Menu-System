@@ -7,7 +7,9 @@ const {auth} = require('./login.js');
 router.use(urlencoded({ extended: true })); 
 const {body, validationResult} = require('express-validator');
 router.use(express.json());
-const SECRET_KEY = 'sds';
+
+require('dotenv').config();
+const SECRET_KEY = process.env.SECRET_KEY;
 
 router.get('/', auth, async (req,res) => {
     const user = jwt.verify(req.cookies.token, SECRET_KEY);

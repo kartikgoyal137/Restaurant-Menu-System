@@ -9,7 +9,8 @@ const {body, validationResult} = require('express-validator');
 const bcrypt = require('bcrypt');
 
 const saltRounds = 10;
-const SECRET_KEY = 'sds';
+require('dotenv').config();
+const SECRET_KEY = process.env.SECRET_KEY;
 
 router.use(urlencoded({ extended: true }));
 router.use(express.static('public'));

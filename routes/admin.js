@@ -5,8 +5,11 @@ const pool = require('../db.js');
 const jwt = require('jsonwebtoken');
 const {auth} = require('./login.js');
 const {body, validationResult} = require('express-validator');
+
 router.use(urlencoded({ extended: true })); 
-const SECRET_KEY = 'sds';
+
+require('dotenv').config();
+const SECRET_KEY = process.env.SECRET_KEY;
 router.use(express.json());
 
 async function adminAuth (req,res,next) {

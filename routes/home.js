@@ -13,7 +13,8 @@ async function fetchFoodData () {
     return rows;
 }
 
-const SECRET_KEY = 'sds';
+require('dotenv').config();
+const SECRET_KEY = process.env.SECRET_KEY;
 
 router.get('/', auth,  async (req,res) => {
     const data = await fetchFoodData();
