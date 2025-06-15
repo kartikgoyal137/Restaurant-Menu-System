@@ -17,18 +17,15 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
       <ul class="navbar-nav text-light ms-auto me-3 mb-2 mb-lg-0">*click on
-                <li class="nav-item mx-2 btn btn-outline-light">
+                <li class="nav-item mx-2 btn btn-outline-info">
            status/role
         </li>
         value to update
         <li class="nav-item mx-2">
-          <a class="nav-link" href="http://localhost:4000/home">Home</a>
+          <a class="nav-link" href="http://localhost:4000/login">Login</a>
         </li>
         <li class="nav-item mx-2">
           <a class="nav-link" href="http://localhost:4000/chef">Chef</a>
-        </li>
-        <li class="nav-item mx-2">
-          <a class="nav-link " href="http://localhost:4000/admin">Admin</a>
         </li>
       </ul>
     </div>
@@ -55,7 +52,7 @@
     <div class="col-1 mx-2 btn btn-outline-warning"><%= item.tableID %></div>
     <div class="col-2 mx-2 btn btn-outline-success"><%= item.timestamp %></div>
     <div class="col-1 mx-2 btn btn-outline-info"><%= item.paymentID %></div>
-    <div class="col-1 mx-2 btn btn-outline-warning" onclick="changeStatus(<%= item.paymentID %>, '<%= item.status %>')"><%= item.status %></div>
+    <div class="col-1 mx-2 btn btn-warning" onclick="changeStatus(<%= item.paymentID %>, '<%= item.status %>')"><%= item.status %></div>
     <div class="col-1 mx-2 btn btn-outline-success"><%= item.bill %></div>
   </div>
 <%}); %>
@@ -64,16 +61,23 @@
   <div class="row pb-5 text-center dataHead">
     <div class="col-1 mx-4">userID</div>
     <div class="col-2 mx-4">Name</div>
-    <div class="col-1 mx-4">Role</div>
+<select id="role" class="text-danger col-1 mx-4 btn btn-warning" name="role" onchange="filter()">
+
+  <option value="role" selected>Role</option>
+  <option value="customer" >Customer</option>
+  <option value="chef">Chef</option>
+  <option value="administrator">Admin</option>
+
+</select>
     <div class="col-3 mx-4">emailID</div>
     <div class="col-2 mx-4">Contact (+91)</div>
   </div>
 <div class="container-fluid data text-center">
 <% users.forEach(item => { %>
-  <div class="row py-2">
-    <div class="col-1 mx-4 btn btn-outline-warning"><%= item.user_id %></div>
+  <div class="userTable row py-2">
+    <div class="key col-1 mx-4 btn btn-outline-warning"><%= item.user_id %></div>
     <div class="col-2 mx-4 btn btn-outline-success"><%= item.first_name%> <%= item.last_name %></div>
-    <div class="col-1 mx-4 btn btn-outline-info" onclick="changeRole(<%= item.user_id %>, '<%= item.role %>')"><%= item.role %></div>
+    <div class="roleF col-1 mx-4 btn btn-info" onclick="changeRole(<%= item.user_id %>, '<%= item.role %>')"><%= item.role %></div>
     <div class="col-3 mx-4 btn btn-outline-warning"><%= item.email %></div>
     <div class="col-2 mx-4 btn btn-outline-success"><%= item.contact %></div>
   </div>

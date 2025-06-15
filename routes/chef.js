@@ -55,6 +55,7 @@ router.get("/", [auth, chefAuth], async (req, res) => {
 
     index++;
   }
+
   res.status(200).render("chef", {
     data: fullData,
   });
@@ -82,6 +83,15 @@ router.patch(
     } else if (Number(req.body.num) === 2) {
       newS = "Completed";
     }
+
+    const users = jwt.verify(req.cookies.token, SECRET_KEY);
+    const query5 = await pool
+      .promise()
+      .query("SELECT * FROM users WHERE user_id = ?", [users.user_id]);
+    if (query5[0].role !== "chef") {
+      return res.status(401).end();
+    }
+
     const query = await pool.promise().query(sql, [newS, req.body.orderID]);
 
     res.status(200).end();

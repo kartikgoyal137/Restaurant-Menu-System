@@ -93,7 +93,7 @@ router.post(
     body("password").notEmpty(),
     authenticate1,
   ],
-  (req, res) => {
+  async (req, res) => {
     const errors = validationResult(req);
     let errM = "";
     if (!errors.isEmpty()) {
@@ -102,6 +102,15 @@ router.post(
       });
       return res.status(400).send(`${errM}`);
     }
+    const [query] = await pool
+      .promise()
+      .query("SELECT * FROM users WHERE email = ?", [req.body.email]);
+    if (query[0].role === "administrator") {
+      return res.status(200).redirect("/admin");
+    } else if (query[0].role === "chef") {
+      return res.status(200).redirect("/chef");
+    }
+
     res.status(200).redirect("/home");
   },
 );

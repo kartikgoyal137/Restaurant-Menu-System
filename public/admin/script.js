@@ -39,3 +39,22 @@ async function changeRole(userID, currentStatus) {
 
   window.location.reload();
 }
+
+function filter() {
+  const roleName = document.getElementById("role").value.toLowerCase();
+  const rows = document.querySelectorAll(".userTable");
+
+  rows.forEach((row) => {
+    if (roleName === "role") {
+      row.style.display = "";
+      return;
+    }
+    const role = row.querySelector(".roleF").textContent.toLowerCase();
+
+    if (role.includes(roleName)) {
+      row.style.display = "";
+    } else {
+      row.style.display = "none";
+    }
+  });
+}

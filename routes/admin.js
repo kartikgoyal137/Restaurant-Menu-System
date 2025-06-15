@@ -26,10 +26,10 @@ async function adminAuth(req, res, next) {
 }
 
 router.get("/", [auth, adminAuth], async (req, res) => {
-  const sql = `select * from orders WHERE status IS NOT NULL`;
+  const sql = `select * from orders WHERE status = ?;`;
   let index = 0;
   const fullData = [];
-  const [orderTable] = await pool.promise().query(sql);
+  const [orderTable] = await pool.promise().query(sql, ["completed"]);
   for (const item of orderTable) {
     const sql2 = "SELECT * FROM serve where order_id = ?";
     const [query2] = await pool.promise().query(sql2, [item.order_id]);
@@ -42,6 +42,7 @@ router.get("/", [auth, adminAuth], async (req, res) => {
       const txt = `(${ele.product_id}/${ele.quantity})`;
       products.push(txt);
     });
+
     if (query3.length > 0) {
       fullData[index].paymentID = query3[0].transaction_id;
       fullData[index].price = query3[0].food_total;
