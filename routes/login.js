@@ -22,11 +22,15 @@ async function authenticate1(req, res, next) {
   const sql = `select * from users where email = ?`;
   const [rows] = await pool.promise().query(sql, [email]);
   if (rows.length === 0) {
-    return res.status(401).send("invalid user");
+    return res.status(401).render("login.ejs", {
+      error: "Email is unregistered",
+    });
   }
   const truePass = rows[0].password_hash;
   if (!bcrypt.compareSync(password, truePass)) {
-    return res.status(401).send("invalid password");
+    return res.status(401).render("login.ejs", {
+      error: "Wrong password",
+    });
   }
   const user = { email: rows[0].email, user_id: rows[0].user_id };
 
@@ -47,7 +51,9 @@ function authenticate2(req, res, next) {
 }
 
 router.get("/", (req, res) => {
-  res.render("login.ejs");
+  res.render("login.ejs", {
+    error: null,
+  });
 });
 
 router.post(
@@ -55,7 +61,7 @@ router.post(
   [
     body("firstName").notEmpty().isAlpha(),
     body("lastName").notEmpty().isAlpha(),
-    body("phone").notEmpty().isNumeric(),
+    body("phone").notEmpty().isNumeric().isLength({ max: 10, min: 10 }),
     body("email").notEmpty().isEmail(),
     body("password").notEmpty().isLength({ min: 8 }),
   ],
@@ -64,9 +70,11 @@ router.post(
     let errM = "";
     if (!errors.isEmpty()) {
       errors.errors.forEach((ele) => {
-        errM += `<h4> [${ele.value}] is invalid value for the field [${ele.path}] </h4>`;
+        errM += `[${ele.value}] is invalid value for the field [${ele.path}]`;
       });
-      return res.status(400).send(`${errM}`);
+      return res.status(400).render("login.ejs", {
+        error: errM,
+      });
     }
 
     const ud = req.body;
@@ -94,11 +102,14 @@ router.post(
     authenticate1,
   ],
   async (req, res) => {
-    const errors = validationResult(req);
+    errors = validationResult(req);
     let errM = "";
     if (!errors.isEmpty()) {
       errors.errors.forEach((ele) => {
-        errM += `<h4> [${ele.value}] is invalid value for the field [${ele.path}] </h4>`;
+        errM += `[${ele.value}] is invalid value for the field [${ele.path}]`;
+      });
+      return res.status(400).render("/login", {
+        error: errM,
       });
       return res.status(400).send(`${errM}`);
     }

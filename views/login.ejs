@@ -57,6 +57,13 @@
     <input required name="password" type="password" class="form-control" id="exampleInputPassword1">
   </div>
   <button type="submit" class="btn btn-primary">Submit</button></form>
+<hr>
+  <% if(error)
+  { %>
+    <h4 class="text-danger">
+      <%= error %>
+      </h4>
+  <% } %>
 </div>
 </div>
 

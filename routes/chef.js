@@ -85,9 +85,8 @@ router.patch(
     }
 
     const users = jwt.verify(req.cookies.token, SECRET_KEY);
-    const query5 = await pool
-      .promise()
-      .query("SELECT * FROM users WHERE user_id = ?", [users.user_id]);
+    const sql5 = "SELECT * FROM users WHERE user_id = ?;";
+    const [query5] = await pool.promise().query(sql5, [users.user_id]);
     if (query5[0].role !== "chef") {
       return res.status(401).end();
     }
