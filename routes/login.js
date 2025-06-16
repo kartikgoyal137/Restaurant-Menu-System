@@ -52,7 +52,7 @@ function authenticate2(req, res, next) {
 
 router.get("/", (req, res) => {
   res.render("login.ejs", {
-    error: null,
+    error: "",
   });
 });
 
@@ -70,7 +70,7 @@ router.post(
     let errM = "";
     if (!errors.isEmpty()) {
       errors.errors.forEach((ele) => {
-        errM += `[${ele.value}] is invalid value for the field [${ele.path}]`;
+        errM += ` -- [${ele.value}] is invalid value for the field [${ele.path}] -- `;
       });
       return res.status(400).render("login.ejs", {
         error: errM,
@@ -90,7 +90,9 @@ router.post(
         ud.email,
         hashPassword(ud.password),
       ]);
-    res.status(200).render("login");
+    res.status(200).render("login", {
+      error: "",
+    });
   },
 );
 
