@@ -41,7 +41,6 @@
         <div class="container cart d-flex">
            <h1 class="pb-4 greet">Thanks <%= userData.first_name %>. <br> Here are your billing details</h1>
            <h2>Order ID : &nbsp;&nbsp;&nbsp; #<%= orderID %></h2>
-           <h2>User ID &nbsp;&nbsp;: &nbsp;&nbsp;&nbsp; #<%= userData.user_id %></h2>
            <h2 class="pb-3">Price : &nbsp;&nbsp;&nbsp;&nbsp;$<%= price %></h2>
            <h2 class="">Instructions </h2>
 <form action="/order/place" method="POST">

@@ -1,0 +1,13 @@
+body {
+    background: url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092') no-repeat center center;
+    background-size: cover;
+    height: 100vh;
+    margin: 0;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+.center-box {
+    background: rgba(0,0,0,0.5);
+    border-radius: 15px;
+    padding: 40px;
+}

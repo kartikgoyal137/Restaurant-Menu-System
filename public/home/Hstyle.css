@@ -10,6 +10,10 @@
   background-color: var(--prussian-blue);
 }
 
+#foodImg {
+  visibility: hidden;
+}
+
 .navbar-brand,
 .nav-item a {
   color: var(--yellow);

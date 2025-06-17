@@ -23,13 +23,13 @@ async function authenticate1(req, res, next) {
   const [rows] = await pool.promise().query(sql, [email]);
   if (rows.length === 0) {
     return res.status(401).render("login.ejs", {
-      error: "Email is unregistered",
+      error: "Wrong credentials",
     });
   }
   const truePass = rows[0].password_hash;
   if (!bcrypt.compareSync(password, truePass)) {
     return res.status(401).render("login.ejs", {
-      error: "Wrong password",
+      error: "Wrong credentials",
     });
   }
   const user = { email: rows[0].email, user_id: rows[0].user_id };

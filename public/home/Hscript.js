@@ -4,6 +4,7 @@ async function getCatData(index) {
   );
   const data = await response.json();
   document.getElementById("foodDes").innerHTML = data.description;
+  document.getElementById("foodImg").style.visibility = "visible";
   document.getElementById("foodImg").src = data.image;
   let allFood = "";
   for (const item of data.items) {

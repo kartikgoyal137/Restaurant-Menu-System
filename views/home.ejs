@@ -18,7 +18,7 @@
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
       <ul class="navbar-nav ms-auto me-3 mb-2 mb-lg-0">
         <li class="nav-item mx-2">
-          <a class="nav-link" href="http://localhost:4000/login">Login</a>
+          <a class="nav-link" href="http://localhost:4000/logout">Logout</a>
         </li>
         <% if(userData.role === 'chef' || userData.role === 'administrator') {%>
         <li class="nav-item mx-2">
@@ -65,7 +65,7 @@
         </div>
 
         <div class="container d-flex md-5 justify-content-center">
-        <img id="foodImg" class="" src="" alt="">
+        <img id="foodImg" class="" src="">
         <div id="foodDes" class="" style="color: white;">
         </div>
         </div>
