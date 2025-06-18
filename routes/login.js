@@ -74,6 +74,7 @@ router.post(
       });
       return res.status(400).render("login.ejs", {
         error: errM,
+        type: "Signup Error",
       });
     }
 
