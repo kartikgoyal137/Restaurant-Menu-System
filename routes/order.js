@@ -108,7 +108,11 @@ router.patch(
 
 router.post(
   "/place",
-  [body("table").notEmpty().isInt({min:1, max:50}), body("tip").notEmpty().isInt({min:0}), auth],
+  [
+    body("table").notEmpty().isInt({ min: 1, max: 50 }),
+    body("tip").notEmpty().isInt({ min: 0 }),
+    auth,
+  ],
   async (req, res) => {
     const errors = validationResult(req);
     let errM = "";
@@ -116,7 +120,7 @@ router.post(
       errors.errors.forEach((ele) => {
         errM += `<h4> [${ele.value}] is invalid value for the field [${ele.path}] </h4>`;
       });
-      return res.status(400).redirect('/err');
+      return res.status(400).redirect("/err");
     }
     let price = 0;
 

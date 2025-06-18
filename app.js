@@ -24,12 +24,12 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/err", async (req, res) => {
-  res.status(404).render('error.ejs');
+  res.status(404).render("error.ejs");
 });
 
 app.get("/logout", async (req, res) => {
-  res.clearCookie('token', {path : '/login'})
-  res.redirect('/login');
+  res.clearCookie("token", { path: "/login" });
+  res.redirect("/login");
 });
 
 app.use("/login", loginRouter);

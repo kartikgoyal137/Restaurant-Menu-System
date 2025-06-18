@@ -40,7 +40,7 @@ router.get("/foods", auth, async (req, res) => {
     description: item.description,
     image: item.image_url,
   };
- 
+
   const sql1 = `SELECT * from menu WHERE category_id =  ?;`;
   const [rows] = await pool.promise().query(sql1, [id]);
 
