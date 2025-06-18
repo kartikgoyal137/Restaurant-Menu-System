@@ -44,7 +44,7 @@
            <h2 class="pb-3">Price : &nbsp;&nbsp;&nbsp;&nbsp;$<%= price %></h2>
            <h2 class="">Instructions </h2>
 <form action="/order/place" method="POST">
-<label for="tableID" class="form-label">Table Number</label><input required name="table" type="number" class="form-control" id="tableID">
+<label for="tableID" class="form-label">Table Number</label><input placeholder="1-50" required name="table" type="number" class="form-control" id="tableID">
 <label for="tipID" class="form-label">Tip Amount ($)</label><input required name="tip" type="number" class="form-control" id="tipID" placeholder="Enter 0 for N/A">
     <label for="exampleFormControlTextarea1" class="form-label">For the Chef</label>
     <textarea class="form-control mb-4" id="exampleFormControlTextarea1" name="message" rows="3"></textarea>
