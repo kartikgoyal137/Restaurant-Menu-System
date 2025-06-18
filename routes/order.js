@@ -3,7 +3,7 @@ const router = Router();
 const express = require("express");
 const pool = require("../db.js");
 const jwt = require("jsonwebtoken");
-const { auth } = require("./middlewares/auth.js");
+const { auth } = require("../middlewares/auth");
 router.use(urlencoded({ extended: true }));
 const { body, validationResult } = require("express-validator");
 router.use(express.json());
@@ -127,7 +127,7 @@ router.post(
       errors.errors.forEach((ele) => {
         errM += `<h4> [${ele.value}] is invalid value for the field [${ele.path}] </h4>`;
       });
-      return res.status(400).redirect("/err");
+      return res.status(400).render("/order", { error: errM });
     }
     let price = 0;
 

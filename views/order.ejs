@@ -48,6 +48,10 @@
 <label for="tipID" class="form-label">Tip Amount ($)</label><input required name="tip" type="number" class="form-control" id="tipID" placeholder="Enter 0 for N/A">
     <label for="exampleFormControlTextarea1" class="form-label">For the Chef</label>
     <textarea class="form-control mb-4" id="exampleFormControlTextarea1" name="message" rows="3"></textarea>
+
+<% if(error) { %>
+  <div><%= error %></div>
+  <% } %>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
         </div>

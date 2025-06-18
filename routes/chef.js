@@ -3,21 +3,21 @@ const router = Router();
 const express = require("express");
 const pool = require("../db.js");
 const jwt = require("jsonwebtoken");
-const { auth, chefAuth } = require("./middlewares/auth.js");
+const { auth, chefAuth } = require("../middlewares/auth");
 const { body, validationResult } = require("express-validator");
 router.use(urlencoded({ extended: true }));
 
 require("dotenv").config();
 const SECRET_KEY = process.env.SECRET_KEY;
 const role = {
-  c : 'chef',
-  a : 'administrator',
-  u : 'customer'
-}
+  c: "chef",
+  a: "administrator",
+  u: "customer",
+};
 const status = {
-  c : 'Completed',
-  o : 'Cooking'
-}
+  c: "Completed",
+  o: "Cooking",
+};
 router.use(express.json());
 
 router.get("/", [auth, chefAuth], async (req, res) => {

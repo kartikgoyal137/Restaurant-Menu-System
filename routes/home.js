@@ -3,7 +3,7 @@ const router = Router();
 const express = require("express");
 const pool = require("../db.js");
 const jwt = require("jsonwebtoken");
-const { auth } = require("./middlewares/auth.js");
+const { auth } = require("../middlewares/auth");
 router.use(urlencoded({ extended: true }));
 router.use(express.json());
 

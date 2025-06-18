@@ -57,4 +57,4 @@ async function chefAuth(req, res, next) {
   next();
 }
 
-module.exports = {authenticate1, auth : authenticate2, chefAuth, adminAuth};
+module.exports = { authenticate1, auth: authenticate2, chefAuth, adminAuth };

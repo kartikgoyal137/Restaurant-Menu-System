@@ -3,7 +3,7 @@ const router = Router();
 const express = require("express");
 const pool = require("../db.js");
 const jwt = require("jsonwebtoken");
-const { auth, adminAuth } = require("./middlewares/auth.js");
+const { auth, adminAuth } = require("../middlewares/auth");
 const { body, validationResult } = require("express-validator");
 
 router.use(urlencoded({ extended: true }));
@@ -13,14 +13,14 @@ const SECRET_KEY = process.env.SECRET_KEY;
 router.use(express.json());
 
 const role = {
-  c : 'chef',
-  a : 'administrator',
-  u : 'customer'
-}
+  c: "chef",
+  a: "administrator",
+  u: "customer",
+};
 const status = {
-  p : 'Pending',
-  c : 'Completed'
-}
+  p: "Pending",
+  c: "Completed",
+};
 
 router.get("/", [auth, adminAuth], async (req, res) => {
   const sql = `select * from orders WHERE status = ?;`;

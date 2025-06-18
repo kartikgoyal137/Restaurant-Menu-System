@@ -7,12 +7,12 @@ const cookieParser = require("cookie-parser");
 const hashPassword = require("../hash.js");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
-const {authenticate1, auth} = require('./middlewares/auth.js');
+const { authenticate1, auth } = require("../middlewares/auth");
 const role = {
-  c : 'chef',
-  a : 'administrator',
-  u : 'customer'
-}
+  c: "chef",
+  a: "administrator",
+  u: "customer",
+};
 const saltRounds = 10;
 require("dotenv").config();
 const SECRET_KEY = process.env.SECRET_KEY;
@@ -21,8 +21,6 @@ router.use(urlencoded({ extended: true }));
 router.use(express.static("public"));
 router.use(cookieParser());
 router.use(express.json());
-
-
 
 router.get("/", (req, res) => {
   res.render("login.ejs", {
@@ -103,4 +101,4 @@ router.post(
   },
 );
 
-module.exports = { loginRouter: router, auth: authenticate2 };
+module.exports = { loginRouter: router};
