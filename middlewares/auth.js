@@ -1,3 +1,9 @@
+const pool = require("../db.js");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+SECRET_KEY = process.env.SECRET_KEY;
+const { Router, urlencoded } = require("express");
+
 async function authenticate1(req, res, next) {
   const { email, password } = req.body;
   const sql = `select * from users where email = ?`;

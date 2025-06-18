@@ -101,4 +101,4 @@ router.post(
   },
 );
 
-module.exports = { loginRouter: router};
+module.exports = { loginRouter: router };

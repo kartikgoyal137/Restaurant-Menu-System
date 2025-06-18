@@ -11,6 +11,19 @@ router.use(express.json());
 require("dotenv").config();
 const SECRET_KEY = process.env.SECRET_KEY;
 
+router.get("/data", auth, async (req, res) => {
+  const sql = "SELECT * FROM serve WHERE order_id = ? AND product_id = ?;";
+  const [query] = await pool
+    .promise()
+    .query(sql, [req.cookies.order_id, req.query.idP]);
+  let ans = 0;
+  if (query.length !== 0) {
+    ans = query[0].quantity;
+  }
+
+  res.send(ans);
+});
+
 router.get("/", auth, async (req, res) => {
   const user = jwt.verify(req.cookies.token, SECRET_KEY);
   const sql = `select * from users where email = ?`;
@@ -46,6 +59,7 @@ router.get("/", auth, async (req, res) => {
     orderID: req.cookies.order_id,
     itemData: itemData,
     price: price,
+    error: "",
   });
 });
 
@@ -125,9 +139,9 @@ router.post(
     let errM = "";
     if (!errors.isEmpty()) {
       errors.errors.forEach((ele) => {
-        errM += `<h4> [${ele.value}] is invalid value for the field [${ele.path}] </h4>`;
+        errM += `[${ele.value}] is invalid value for the field [${ele.path}]`;
       });
-      return res.status(400).render("/order", { error: errM });
+      return res.status(400).render("error.ejs", { error: errM });
     }
     let price = 0;
 

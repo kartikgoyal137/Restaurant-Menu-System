@@ -49,7 +49,6 @@ async function editOrder(idP, num) {
 
   const count = document.getElementById(`count${idP}`);
 
-  // Hide after 3 seconds
   setTimeout(() => {
     popup.classList.remove("show");
   }, 2000);
@@ -58,7 +57,18 @@ async function editOrder(idP, num) {
   data.start = 1;
   data.num = num;
 
-  count.innerHTML = Number(count.innerHTML) + num;
+  const response = await fetch(`/order/data?idP=${idP}`);
+  const quantity = await response.text();
+
+  if (count.innerHTML === "0" && num === -1) {
+    return;
+  }
+
+  count.innerHTML = Number(quantity) + num;
+  if (count.innerHTML == "NaN") {
+    count.innerHTML = 1;
+  }
+
   if (Number(count.innerHTML) < 0) {
     count.innerHTML = 0;
   }
