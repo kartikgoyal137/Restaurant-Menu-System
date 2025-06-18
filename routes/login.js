@@ -8,7 +8,11 @@ const hashPassword = require("../hash.js");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const {authenticate1, auth} = require('./middlewares/auth.js');
-
+const role = {
+  c : 'chef',
+  a : 'administrator',
+  u : 'customer'
+}
 const saltRounds = 10;
 require("dotenv").config();
 const SECRET_KEY = process.env.SECRET_KEY;
@@ -89,9 +93,9 @@ router.post(
     const [query] = await pool
       .promise()
       .query("SELECT * FROM users WHERE email = ?", [req.body.email]);
-    if (query[0].role === "administrator") {
+    if (query[0].role === role.a) {
       return res.status(200).redirect("/admin");
-    } else if (query[0].role === "chef") {
+    } else if (query[0].role === role.c) {
       return res.status(200).redirect("/chef");
     }
 

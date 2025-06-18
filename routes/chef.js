@@ -9,7 +9,15 @@ router.use(urlencoded({ extended: true }));
 
 require("dotenv").config();
 const SECRET_KEY = process.env.SECRET_KEY;
-
+const role = {
+  c : 'chef',
+  a : 'administrator',
+  u : 'customer'
+}
+const status = {
+  c : 'Completed',
+  o : 'Cooking'
+}
 router.use(express.json());
 
 router.get("/", [auth, chefAuth], async (req, res) => {
@@ -18,7 +26,7 @@ router.get("/", [auth, chefAuth], async (req, res) => {
   const fullData = [];
   const [orderTable] = await pool.promise().query(sql);
   for (const item of orderTable) {
-    if (item.status === "Completed") {
+    if (item.status === status.c) {
       continue;
     }
     const sql2 = "SELECT * FROM serve where order_id = ?";
@@ -69,17 +77,17 @@ router.patch(
     const sql = "UPDATE orders SET status = ? WHERE ORDER_ID = ? ;";
     let newS = "";
     if (Number(req.body.num) === 0) {
-      newS = "Cooking";
+      newS = status.o;
     } else if (Number(req.body.num) === 1) {
-      newS = "Completed";
+      newS = status.c;
     } else if (Number(req.body.num) === 2) {
-      newS = "Completed";
+      newS = status.c;
     }
 
     const users = jwt.verify(req.cookies.token, SECRET_KEY);
     const sql5 = "SELECT * FROM users WHERE user_id = ?;";
     const [query5] = await pool.promise().query(sql5, [users.user_id]);
-    if (query5[0].role !== "chef") {
+    if (query5[0].role !== role.c) {
       return res.status(401).end();
     }
 

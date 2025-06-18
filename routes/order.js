@@ -3,7 +3,7 @@ const router = Router();
 const express = require("express");
 const pool = require("../db.js");
 const jwt = require("jsonwebtoken");
-const { auth } = require("./login.js");
+const { auth } = require("./middlewares/auth.js");
 router.use(urlencoded({ extended: true }));
 const { body, validationResult } = require("express-validator");
 router.use(express.json());

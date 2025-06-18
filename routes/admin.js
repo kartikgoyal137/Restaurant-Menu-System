@@ -12,6 +12,15 @@ require("dotenv").config();
 const SECRET_KEY = process.env.SECRET_KEY;
 router.use(express.json());
 
+const role = {
+  c : 'chef',
+  a : 'administrator',
+  u : 'customer'
+}
+const status = {
+  p : 'Pending',
+  c : 'Completed'
+}
 
 router.get("/", [auth, adminAuth], async (req, res) => {
   const sql = `select * from orders WHERE status = ?;`;
@@ -44,7 +53,7 @@ router.get("/", [auth, adminAuth], async (req, res) => {
       fullData[index].tip = 0;
       fullData[index].bill = 0;
       fullData[index].timestamp = "N/A";
-      fullData[index].status = "Pending";
+      fullData[index].status = status.p;
     }
 
     fullData[index].orderID = item.order_id;
@@ -85,9 +94,9 @@ router.patch(
     const sql = "UPDATE payments SET status = ? WHERE transaction_id = ? ;";
     let newS = "";
     if (Number(req.body.num) === 0) {
-      newS = "Completed";
+      newS = status.c;
     } else {
-      newS = "Pending";
+      newS = status.p;
     }
     const query = await pool
       .promise()
@@ -113,11 +122,11 @@ router.patch(
     const sql = "UPDATE users SET role = ? WHERE user_id = ? ;";
     let newS = "";
     if (Number(req.body.num) === 0) {
-      newS = "chef";
+      newS = role.c;
     } else if (Number(req.body.num) === 1) {
-      newS = "administrator";
+      newS = role.a;
     } else {
-      newS = "customer";
+      newS = role.u;
     }
     if (req.body.userID === 10018) {
       return res.status(401).send(`<h2>can't remove ROOT ADMIN </h2>`);
