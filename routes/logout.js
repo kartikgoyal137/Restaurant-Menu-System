@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 
-router.get("/logout", async (req, res) => {
+router.get("/", async (req, res) => {
   res.clearCookie("token", { path: "/" });
   res.clearCookie("order_id", { path: "/" });
   res.clearCookie("table", { path: "/" });

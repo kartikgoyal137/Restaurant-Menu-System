@@ -23,7 +23,7 @@ async function getCatData(index) {
 
 async function startOrder(data) {
   const add = document.querySelector(".disable");
-  const startButton = document.querySelector(".startButton");
+  const startButton = document.querySelectorAll(".startButton");
 
   add.style.opacity = "1";
   add.style.pointerEvents = "all";
@@ -39,7 +39,8 @@ async function startOrder(data) {
     body: JSON.stringify(data),
   });
 
-  startButton.style.visibility = "hidden";
+  startButton[0].style.visibility = "hidden";
+  startButton[1].style.visibility = "hidden";
 }
 
 async function editOrder(idP, num) {

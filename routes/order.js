@@ -52,7 +52,7 @@ router.get("/", auth, async (req, res) => {
 router.patch(
   "/update",
   [
-    body("start").notEmpty().isInt({ min: -1, max: +1 }),
+    body("start").notEmpty().isInt({ min: -1, max: +2 }),
     body("num").notEmpty().isInt({ min: -1, max: +1 }),
     body("product_id").notEmpty().isInt({ min: 51000, max: 54000 }),
     auth,
@@ -76,6 +76,13 @@ router.patch(
         "INSERT INTO orders (user_id, created_at) VALUES (?, NOW()); ";
       const query_1 = await pool.promise().query(sql_1, [user.user_id]);
 
+      const sql_3 = "SELECT * FROM orders where user_id = ?";
+      const [query_3] = await pool.promise().query(sql_3, [user.user_id]);
+      res.cookie("order_id", query_3.at(-1).order_id);
+      res.status(201).end();
+    }
+
+    if (info.start === 2) {
       const sql_3 = "SELECT * FROM orders where user_id = ?";
       const [query_3] = await pool.promise().query(sql_3, [user.user_id]);
       res.cookie("order_id", query_3.at(-1).order_id);
