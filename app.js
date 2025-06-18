@@ -28,7 +28,7 @@ app.get("/err", async (req, res) => {
 });
 
 app.get("/logout", async (req, res) => {
-  res.clearCookie("token", { path: "/login" });
+  res.clearCookie("token", { path: "/" });
   res.redirect("/login");
 });
 
