@@ -8,6 +8,7 @@ const homeRouter = require("./routes/home.js");
 const orderRouter = require("./routes/order.js");
 const adminRouter = require("./routes/admin.js");
 const chefRouter = require("./routes/chef.js");
+const logoutRouter = require("./routes/logout.js");
 const { loginRouter } = require("./routes/login.js");
 
 const path = require("path");
@@ -27,19 +28,12 @@ app.get("/err", async (req, res) => {
   res.status(404).render("error.ejs");
 });
 
-app.get("/logout", async (req, res) => {
-  res.clearCookie("token", { path: "/" });
-  res.clearCookie("order_id", { path: "/" });
-  res.clearCookie("table", { path: "/" });
-  res.clearCookie("total", { path: "/" });
-  res.redirect("/login");
-});
-
 app.use("/login", loginRouter);
 app.use("/home", homeRouter);
 app.use("/order", orderRouter);
 app.use("/chef", chefRouter);
 app.use("/admin", adminRouter);
+app.use("/logout", logoutRouter);
 
 app.get("/users", (req, res) => {
   pool.query("SELECT * FROM users", (err, results) => {

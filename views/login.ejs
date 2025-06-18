@@ -60,7 +60,9 @@
 <hr>
   <% if(error)
   { %>
+    <% if(type) { %>
     <h2 class="text-warning"><%= type %></h2>
+    <%}%>
     <h4 class="text-danger">
       <%= error %>
       </h4>

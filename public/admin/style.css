@@ -58,3 +58,7 @@
 .modal-dialog {
   border-radius: 35%;
 }
+
+.modal {
+  background-color: transparent;
+}

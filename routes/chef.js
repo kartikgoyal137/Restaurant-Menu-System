@@ -56,8 +56,13 @@ router.get("/", [auth, chefAuth], async (req, res) => {
     index++;
   }
 
+  const sql6 = "SELECT * FROM users WHERE user_id = ?;";
+  const user = jwt.verify(req.cookies.token, SECRET_KEY);
+  const [query6] = await pool.promise().query(sql6, [user.user_id]);
+
   res.status(200).render("chef", {
     data: fullData,
+    cRole: query6[0].role,
   });
 });
 

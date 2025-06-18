@@ -1,4 +1,8 @@
-async function changeStatus(orderID, currentStatus) {
+async function changeStatus(orderID, currentStatus, role) {
+  if (role !== "chef") {
+    return;
+  }
+
   let num = 0;
   if (currentStatus === "Yet to start") {
     num = 0;

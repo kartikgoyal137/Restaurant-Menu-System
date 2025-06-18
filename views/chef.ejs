@@ -24,15 +24,21 @@
                    <li class="nav-item mx-2">
           <a class="nav-link" href="http://localhost:4000/logout">Logout</a>
         </li>
+        <% if(cRole !== 'chef') { %>
                    <li class="nav-item mx-2">
           <a class="nav-link" href="http://localhost:4000/admin">Admin</a>
         </li>
+        <% } %>
       </ul>
       
     </div>
   </div>
 </nav>
 
+<% if(data.length === 0) { %>
+  <h2 class="text-warning noorder">No orders yet...</h2>
+  <% } %>
+  <% if(data.length !== 0) {%>
 
   <div class="row py-5 text-center dataHead">
     <div class="col-1 mx-2">orderID</div>
@@ -43,6 +49,7 @@
     <div class="col-2 mx-2">Instructions</div>
     <div class="col-2 mx-2">Timestamp</div>
   </div>
+  <% } %>
 <div class="container-fluid data text-center">
 <% data.forEach((item,index) => { %>
   <div class="row py-2">
@@ -50,7 +57,7 @@
     <div class="col-1 btn btn-outline-success mx-2"><%= item.userID %></div>
     <div class="col-2 mx-2 btn btn-outline-info"><%= item.dish %></div>
     <div class="col-1 mx-2 btn btn-outline-warning"><%= item.tableID %></div>
-    <div class="col-1 mx-2 btn btn-outline-success" onclick="changeStatus(<%= item.orderID %>, '<%= item.status %>')"><%= item.status %></div>
+    <div class="col-1 mx-2 btn btn-outline-success" onclick="changeStatus(<%= item.orderID %>, '<%= item.status %>'), '<%= cRole %>' "><%= item.status %></div>
     <div class="col-2 mx-2 btn btn-outline-info"><%= item.instructions %></div>
     <div class="col-2 mx-2 btn btn-outline-warning"><%= item.timestamp %></div>
   </div>

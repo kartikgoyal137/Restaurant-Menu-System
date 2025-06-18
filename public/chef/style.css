@@ -42,3 +42,9 @@
 .data {
   font-weight: 600;
 }
+
+.noorder {
+  text-align: center;
+  font-size: 3em;
+  padding-top: 4em;
+}
