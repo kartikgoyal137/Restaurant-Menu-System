@@ -42,3 +42,19 @@
 .data {
   font-weight: 600;
 }
+
+.modal-dialog,
+.modal-header,
+.model-body,
+.modal-title,
+.h {
+  background-color: whitesmoke;
+}
+
+.modal-title {
+  font-weight: 750;
+}
+
+.modal-dialog {
+  border-radius: 35%;
+}

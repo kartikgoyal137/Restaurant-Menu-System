@@ -78,10 +78,32 @@
   <div class="userTable row py-2">
     <div class="key col-1 mx-4 btn btn-outline-warning"><%= item.user_id %></div>
     <div class="col-2 mx-4 btn btn-outline-success"><%= item.first_name%> <%= item.last_name %></div>
-    <div class="roleF col-1 mx-4 btn btn-info" onclick="changeRole(<%= item.user_id %>, '<%= item.role %>')"><%= item.role %></div>
+    <div class="roleF col-1 mx-4 btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal<%= item.user_id %>"><%= item.role %></div>
     <div class="col-3 mx-4 btn btn-outline-warning"><%= item.email %></div>
     <div class="col-2 mx-4 btn btn-outline-success"><%= item.contact %></div>
   </div>
+
+<div class="modal fade" id="exampleModal<%= item.user_id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Change User Role</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body h text-dark">
+        Do you want to change <%= item.first_name %>'s role?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="changeRole(<%= item.user_id %>, '<%= item.role %>')">Change</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 <%}); %>
 
 </div>

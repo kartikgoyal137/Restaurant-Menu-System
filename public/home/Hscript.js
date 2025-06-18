@@ -13,6 +13,7 @@ async function getCatData(index) {
     <div class="addToCart d-inline">
       <button class="btn btn-danger" onclick="editOrder(${item.product_id}, -1)">-<div id="popup" class="popup">Done!</div></button>
       <button class="btn btn-success" onclick="editOrder(${item.product_id}, 1)">+<div id="popup" class="popup">Done!</div></button>
+      <span id="count${item.product_id}" class="count"></span>
     </div>
     </div></div>`;
   }
@@ -45,6 +46,8 @@ async function editOrder(idP, num) {
   const popup = document.getElementById("popup");
   popup.classList.add("show");
 
+  const count = document.getElementById(`count${idP}`);
+
   // Hide after 3 seconds
   setTimeout(() => {
     popup.classList.remove("show");
@@ -53,6 +56,12 @@ async function editOrder(idP, num) {
   data = { product_id: idP };
   data.start = 1;
   data.num = num;
+
+  count.innerHTML = Number(count.innerHTML) + num;
+  if (Number(count.innerHTML) < 0) {
+    count.innerHTML = 0;
+  }
+
   const start = await fetch("/order/update", {
     method: "PATCH",
     headers: {
