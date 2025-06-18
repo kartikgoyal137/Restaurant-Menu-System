@@ -3,7 +3,7 @@ const router = Router();
 const express = require("express");
 const pool = require("../db.js");
 const jwt = require("jsonwebtoken");
-const { auth } = require("./login.js");
+const { auth, chefAuth } = require("./middlewares/auth.js");
 const { body, validationResult } = require("express-validator");
 router.use(urlencoded({ extended: true }));
 
@@ -11,19 +11,6 @@ require("dotenv").config();
 const SECRET_KEY = process.env.SECRET_KEY;
 
 router.use(express.json());
-
-async function chefAuth(req, res, next) {
-  const user = jwt.verify(req.cookies.token, SECRET_KEY);
-  const sql = "SELECT * from users where user_id = ?";
-  const [query] = await pool.promise().query(sql, [user.user_id]);
-  if (query.length > 0) {
-    if (query[0].role === "customer") {
-      return res.status(403).send("invalid credentials");
-    }
-  }
-
-  next();
-}
 
 router.get("/", [auth, chefAuth], async (req, res) => {
   const sql = `select * from orders WHERE status IS NOT NULL`;

@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const hashPassword = require("../hash.js");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
+const {authenticate1, auth} = require('./middlewares/auth.js');
 
 const saltRounds = 10;
 require("dotenv").config();
@@ -17,38 +18,7 @@ router.use(express.static("public"));
 router.use(cookieParser());
 router.use(express.json());
 
-async function authenticate1(req, res, next) {
-  const { email, password } = req.body;
-  const sql = `select * from users where email = ?`;
-  const [rows] = await pool.promise().query(sql, [email]);
-  if (rows.length === 0) {
-    return res.status(401).render("login.ejs", {
-      error: "Wrong credentials",
-    });
-  }
-  const truePass = rows[0].password_hash;
-  if (!bcrypt.compareSync(password, truePass)) {
-    return res.status(401).render("login.ejs", {
-      error: "Wrong credentials",
-    });
-  }
-  const user = { email: rows[0].email, user_id: rows[0].user_id };
 
-  const token = jwt.sign(user, SECRET_KEY, { expiresIn: "1h" });
-  res.cookie("token", token, { httpOnly: true });
-  next();
-}
-
-function authenticate2(req, res, next) {
-  try {
-    const token = req.cookies.token;
-    const user = jwt.verify(token, SECRET_KEY);
-    next();
-  } catch (err) {
-    res.clearCookie("token");
-    return res.status(401).redirect("/login");
-  }
-}
 
 router.get("/", (req, res) => {
   res.render("login.ejs", {
