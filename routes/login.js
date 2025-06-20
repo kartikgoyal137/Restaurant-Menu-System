@@ -7,7 +7,8 @@ const cookieParser = require("cookie-parser");
 const hashPassword = require("../hash.js");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
-const { authenticate1, auth } = require("../middlewares/auth");
+const tokenVerify = require("../middlewares/auth/token.js");
+const loginAuth = require("../middlewares/auth/login.js");
 const role = {
   c: "chef",
   a: "administrator",
@@ -74,7 +75,7 @@ router.post(
   [
     body("email").notEmpty().isEmail(),
     body("password").notEmpty(),
-    authenticate1,
+    loginAuth,
   ],
   async (req, res) => {
     errors = validationResult(req);

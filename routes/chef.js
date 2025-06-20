@@ -3,7 +3,8 @@ const router = Router();
 const express = require("express");
 const pool = require("../db.js");
 const jwt = require("jsonwebtoken");
-const { auth, chefAuth } = require("../middlewares/auth");
+const chefAuth = require("../middlewares/auth/chef.js");
+const tokenVerify = require("../middlewares/auth/token.js");
 const { body, validationResult } = require("express-validator");
 router.use(urlencoded({ extended: true }));
 
@@ -20,7 +21,7 @@ const status = {
 };
 router.use(express.json());
 
-router.get("/", [auth, chefAuth], async (req, res) => {
+router.get("/", [tokenVerify, chefAuth], async (req, res) => {
   const sql = `select * from orders WHERE status IS NOT NULL`;
   let index = 0;
   const fullData = [];
@@ -66,7 +67,7 @@ router.patch(
   [
     body("num").notEmpty().isInt({ min: 0, max: 2 }),
     body("orderID").notEmpty().isInt(),
-    auth,
+    tokenVerify,
     chefAuth,
   ],
   async (req, res) => {

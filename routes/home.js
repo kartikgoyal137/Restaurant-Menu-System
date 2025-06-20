@@ -3,7 +3,7 @@ const router = Router();
 const express = require("express");
 const pool = require("../db.js");
 const jwt = require("jsonwebtoken");
-const { auth } = require("../middlewares/auth");
+const tokenVerify = require("../middlewares/auth/token.js");
 router.use(urlencoded({ extended: true }));
 router.use(express.json());
 
@@ -16,7 +16,7 @@ async function fetchFoodData() {
 require("dotenv").config();
 const SECRET_KEY = process.env.SECRET_KEY;
 
-router.get("/", auth, async (req, res) => {
+router.get("/", tokenVerify, async (req, res) => {
   const data = await fetchFoodData();
   const user = jwt.verify(req.cookies.token, SECRET_KEY);
   const sql = `select * from users where email = ?`;
@@ -30,7 +30,7 @@ router.get("/", auth, async (req, res) => {
   });
 });
 
-router.get("/foods", auth, async (req, res) => {
+router.get("/foods", tokenVerify, async (req, res) => {
   const data = await fetchFoodData();
   const id = parseInt(req.query.category) || 0;
   const item = data.find((item) => item.category_id === id);

@@ -3,7 +3,7 @@ const router = Router();
 const express = require("express");
 const pool = require("../db.js");
 const jwt = require("jsonwebtoken");
-const { auth } = require("../middlewares/auth");
+const tokenVerify = require("../middlewares/auth/token.js");
 router.use(urlencoded({ extended: true }));
 const { body, validationResult } = require("express-validator");
 router.use(express.json());
@@ -11,7 +11,7 @@ router.use(express.json());
 require("dotenv").config();
 const SECRET_KEY = process.env.SECRET_KEY;
 
-router.get("/data", auth, async (req, res) => {
+router.get("/data", tokenVerify, async (req, res) => {
   const sql = "SELECT * FROM serve WHERE order_id = ? AND product_id = ?;";
   const [query] = await pool
     .promise()
@@ -24,7 +24,7 @@ router.get("/data", auth, async (req, res) => {
   res.send(ans);
 });
 
-router.get("/", auth, async (req, res) => {
+router.get("/", tokenVerify, async (req, res) => {
   const user = jwt.verify(req.cookies.token, SECRET_KEY);
   const sql = `select * from users where email = ?`;
   const [userData] = await pool.promise().query(sql, [user.email]);
@@ -69,7 +69,7 @@ router.patch(
     body("start").notEmpty().isInt({ min: -1, max: +2 }),
     body("num").notEmpty().isInt({ min: -1, max: +1 }),
     body("product_id").notEmpty().isInt({ min: 51000, max: 54000 }),
-    auth,
+    tokenVerify,
   ],
   async (req, res) => {
     const Allerr = validationResult(req).array();
@@ -132,7 +132,7 @@ router.post(
   [
     body("table").notEmpty().isInt({ min: 1, max: 50 }),
     body("tip").notEmpty().isInt({ min: 0 }),
-    auth,
+    tokenVerify,
   ],
   async (req, res) => {
     const errors = validationResult(req);
