@@ -35,17 +35,6 @@ app.use("/chef", chefRouter);
 app.use("/admin", adminRouter);
 app.use("/logout", logoutRouter);
 
-app.get("/users", (req, res) => {
-  pool.query("SELECT * FROM users", (err, results) => {
-    if (err) throw err;
-    res.json(results);
-  });
-});
-
-app.get("/", (req, res) => {
-  res.redirect("/login");
-});
-
 app.listen(4000, () => {
   console.log("listening on port 4000");
 });
