@@ -122,9 +122,9 @@ router.patch(
     }
     const sql = "UPDATE users SET role = ? WHERE user_id = ? ;";
     let newS = "";
-    if (Number(req.body.num) === 0) {
+    if (req.body.num === 0) {
       newS = role.c;
-    } else if (Number(req.body.num) === 1) {
+    } else if (req.body.num === 1) {
       newS = role.a;
     } else {
       newS = role.u;

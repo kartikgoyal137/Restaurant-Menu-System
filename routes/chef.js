@@ -77,11 +77,11 @@ router.patch(
     }
     const sql = "UPDATE orders SET status = ? WHERE ORDER_ID = ? ;";
     let newS = "";
-    if (Number(req.body.num) === 0) {
+    if (req.body.num === 0) {
       newS = status.o;
-    } else if (Number(req.body.num) === 1) {
+    } else if (req.body.num === 1) {
       newS = status.c;
-    } else if (Number(req.body.num) === 2) {
+    } else if (req.body.num === 2) {
       newS = status.c;
     }
 
