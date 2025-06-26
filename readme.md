@@ -14,6 +14,7 @@
 
 ```
 git clone git@github.com:kartikgoyal137/Restaurant-Menu-System.git
+cd Restaurant-Menu-System
 npm install
 cp .env.example .env
 mysql -u root -p < velvetPlate.sql
