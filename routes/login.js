@@ -67,6 +67,7 @@ router.post(
       ]);
     res.status(200).render("login", {
       error: "",
+      type: ""
     });
   },
 );
