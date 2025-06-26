@@ -86,8 +86,9 @@ router.post(
       errors.errors.forEach((ele) => {
         errM += `[${ele.value}] is invalid value for the field [${ele.path}]`;
       });
-      return res.status(400).render("/login", {
+      return res.status(400).render("login", {
         error: errM,
+        type: ""
       });
       return res.status(400).send(`${errM}`);
     }
