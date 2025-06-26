@@ -26,6 +26,7 @@ router.use(express.json());
 router.get("/", (req, res) => {
   res.render("login.ejs", {
     error: "",
+    type: ""
   });
 });
 
