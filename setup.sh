@@ -8,5 +8,4 @@ cp .env.example .env
 echo "Importing database..."
 mysql -u root -p < velvetPlate.sql
 
-echo "Starting the app..."
-node app.js
+echo "Add local variables to .env and run [node app.js]"
