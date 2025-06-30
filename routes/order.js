@@ -51,8 +51,6 @@ router.get("/", tokenVerify, async (req, res) => {
     price += itemPrice;
     index++;
   }
-  // const sql3 = 'UPDATE payments SET food_total = ? WHERE order_id = ?';
-  // const [query3] = await pool.promise().query(sql3, [price, req.cookies.order_id]);
 
   res.status(200).render("order.ejs", {
     userData: userData[0],
@@ -141,7 +139,7 @@ router.post(
       errors.errors.forEach((ele) => {
         errM += `[${ele.value}] is invalid value for the field [${ele.path}]`;
       });
-      return res.status(400).render("error.ejs", { error: errM });
+      return res.status(400).redirect("/order");
     }
     let price = 0;
 

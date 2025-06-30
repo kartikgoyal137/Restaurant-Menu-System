@@ -10,7 +10,7 @@ async function chefAuth(req, res, next) {
   const [query] = await pool.promise().query(sql, [user.user_id]);
   if (query.length > 0) {
     if (query[0].role === "customer") {
-      return res.status(403).send("invalid credentials");
+      return res.status(403).redirect("/err");
     }
   }
 
