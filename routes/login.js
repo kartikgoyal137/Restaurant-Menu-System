@@ -50,6 +50,14 @@ router.post(
         type: "Signup Error",
       });
     }
+    const sql3 = "SELECT * FROM users WHERE email = ?";
+    const [query] = await pool.promise().query(sql3, [req.body.email]);
+    if (query.length > 0) {
+      return res.status(200).render("login", {
+        error: "Email is already registered",
+        type: "Signup error!",
+      });
+    }
 
     const ud = req.body;
     const sql =
