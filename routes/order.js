@@ -97,8 +97,11 @@ router.patch(
     if (info.start === 2) {
       const sql_3 = "SELECT * FROM orders where user_id = ?";
       const [query_3] = await pool.promise().query(sql_3, [user.user_id]);
-      res.cookie("order_id", query_3.at(-1).order_id);
-      res.status(201).end();
+      if(query_3.length>0) {
+        res.cookie("order_id", query_3.at(-1).order_id);
+        res.status(201).end();
+      }
+      res.end();
     }
 
     if (info.start === 1) {
