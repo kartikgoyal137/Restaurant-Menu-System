@@ -16,7 +16,6 @@ const role = {
 };
 const saltRounds = 10;
 require("dotenv").config();
-const SECRET_KEY = process.env.SECRET_KEY;
 
 router.use(urlencoded({ extended: true }));
 router.use(express.static("public"));
@@ -26,7 +25,7 @@ router.use(express.json());
 router.get("/", (req, res) => {
   res.render("login.ejs", {
     error: "",
-    type: ""
+    type: "",
   });
 });
 
@@ -67,18 +66,14 @@ router.post(
       ]);
     res.status(200).render("login", {
       error: "",
-      type: ""
+      type: "Successful Signup!",
     });
   },
 );
 
 router.post(
   "/auth",
-  [
-    body("email").notEmpty().isEmail(),
-    body("password").notEmpty(),
-    loginAuth,
-  ],
+  [body("email").notEmpty().isEmail(), body("password").notEmpty(), loginAuth],
   async (req, res) => {
     errors = validationResult(req);
     let errM = "";
@@ -88,9 +83,8 @@ router.post(
       });
       return res.status(400).render("login", {
         error: errM,
-        type: ""
+        type: "Login error!",
       });
-      return res.status(400).send(`${errM}`);
     }
     const [query] = await pool
       .promise()

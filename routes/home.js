@@ -9,7 +9,7 @@ router.use(express.json());
 
 async function fetchFoodData() {
   const sql = "select * from categories;";
-  const [rows, fields] = await pool.promise().query(sql);
+  const [rows] = await pool.promise().query(sql);
   return rows;
 }
 
@@ -20,13 +20,12 @@ router.get("/", tokenVerify, async (req, res) => {
   const data = await fetchFoodData();
   const user = jwt.verify(req.cookies.token, SECRET_KEY);
   const sql = `select * from users where email = ?`;
-  const sql2 = `select * from orders`;
-  let userData = [[{ first_name: "User" }]];
-  userData = await pool.promise().query(sql, [user.email]);
-  const orderq = await pool.promise().query(sql, [user.email]);
+
+  const [userData] = await pool.promise().query(sql, [user.email]);
+
   res.status(200).render("home", {
     categories: data,
-    userData: userData[0][0],
+    userData: userData[0],
   });
 });
 

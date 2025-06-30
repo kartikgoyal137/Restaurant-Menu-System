@@ -25,7 +25,9 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/err", async (req, res) => {
-  res.status(404).render("error.ejs");
+  res.status(404).render("error.ejs", {
+    error: "",
+  });
 });
 
 app.use("/login", loginRouter);

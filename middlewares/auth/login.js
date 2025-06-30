@@ -11,14 +11,14 @@ async function loginAuth(req, res, next) {
   if (rows.length === 0) {
     return res.status(401).render("login.ejs", {
       error: "Wrong credentials",
-      type: ""
+      type: "",
     });
   }
   const truePass = rows[0].password_hash;
   if (!bcrypt.compareSync(password, truePass)) {
     return res.status(401).render("login.ejs", {
       error: "Wrong credentials",
-      type: ""
+      type: "",
     });
   }
   const user = { email: rows[0].email, user_id: rows[0].user_id };

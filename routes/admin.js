@@ -10,7 +10,6 @@ const { body, validationResult } = require("express-validator");
 router.use(urlencoded({ extended: true }));
 
 require("dotenv").config();
-const SECRET_KEY = process.env.SECRET_KEY;
 router.use(express.json());
 
 const role = {
